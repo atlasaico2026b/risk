@@ -1,0 +1,45 @@
+// SHOGO:CUSTOM-START prisma-header
+// Managed by Shogo. Do not add a datasource `url` or change the generator `provider` — the database URL is configured in prisma.config.ts (Prisma 7+).
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+// SHOGO:CUSTOM-END
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model RiskReport {
+  id           String   @id @default(cuid())
+  reporterName String
+  department   String
+  position     String?
+  contact      String?
+  title        String
+  category     String
+  location     String?
+  description  String
+  hazards      String?
+  suggestion   String
+  probability  Int      @default(3)
+  impact       Int      @default(3)
+  score        Int      @default(9)
+  level        String   @default("متوسط")
+  status       String   @default("new")
+  managerNote  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("risk_reports")
+}
